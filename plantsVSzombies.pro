@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    lawn.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    lawn.h
 
 FORMS    += mainwindow.ui
 
