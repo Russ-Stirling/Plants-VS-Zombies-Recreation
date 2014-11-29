@@ -347,3 +347,9 @@ void MainWindow::on_sunFlowerButton_clicked()
     ui->graphicsView->setPlant("Sunflower");
 
 }
+
+
+void MainWindow::mousePressEvent(QMouseEvent *e)
+{
+    qDebug()<<e->globalPos();
+}

@@ -15,11 +15,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     lawn.cpp \
-    plant.cpp
+    plant.cpp \
+    sun.cpp \
+    lawnmower.cpp \
+    zombie.cpp
 
 HEADERS  += mainwindow.h \
     lawn.h \
-    plant.h
+    plant.h \
+    sun.h \
+    lawnmower.h \
+    zombie.h
 
 FORMS    += mainwindow.ui
 

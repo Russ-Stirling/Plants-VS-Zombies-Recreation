@@ -33,6 +33,10 @@ public:
     QString getName(){return plantName;}
     void buttonsEnabled();
 
+public slots:
+    void mousePressEvent(QMouseEvent *e);
+
+
 
 private slots:
     void on_startButton_clicked();
@@ -45,6 +49,7 @@ private slots:
 
     void on_sunFlowerButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -55,7 +60,7 @@ private:
     QStringList userInfo, userTimestamp, userName, userLevel;
     QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement;
 
-    QString plantName="empty";
+    QString plantName;
 
 
 
