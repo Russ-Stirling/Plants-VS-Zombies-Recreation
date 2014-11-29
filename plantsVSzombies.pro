@@ -14,10 +14,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    lawn.cpp
+    lawn.cpp \
+    plant.cpp \
+    sunflower.cpp \
+    peashooter.cpp \
+    cherrybomb.cpp \
+    wallnut.cpp \
+    potatoemine.cpp \
+    snowpea.cpp \
+    chomper.cpp \
+    repeater.cpp
 
 HEADERS  += mainwindow.h \
-    lawn.h
+    lawn.h \
+    plant.h \
+    sunflower.h \
+    peashooter.h \
+    cherrybomb.h \
+    wallnut.h \
+    potatoemine.h \
+    snowpea.h \
+    chomper.h \
+    repeater.h
 
 FORMS    += mainwindow.ui
 
