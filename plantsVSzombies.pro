@@ -15,27 +15,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     lawn.cpp \
-    plant.cpp \
-    sunflower.cpp \
-    peashooter.cpp \
-    cherrybomb.cpp \
-    wallnut.cpp \
-    potatoemine.cpp \
-    snowpea.cpp \
-    chomper.cpp \
-    repeater.cpp
+    plant.cpp
 
 HEADERS  += mainwindow.h \
     lawn.h \
-    plant.h \
-    sunflower.h \
-    peashooter.h \
-    cherrybomb.h \
-    wallnut.h \
-    potatoemine.h \
-    snowpea.h \
-    chomper.h \
-    repeater.h
+    plant.h
 
 FORMS    += mainwindow.ui
 

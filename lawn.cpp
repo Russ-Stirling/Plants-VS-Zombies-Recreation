@@ -13,6 +13,8 @@ lawn::lawn(QWidget *parent) :
 void lawn::mousePressEvent(QMouseEvent *e)
 {
     qDebug() << e->localPos();
+    if (!plantName.isEmpty())
+    {
         QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/"+plantName+".png");
 
         p=new plant;
@@ -41,14 +43,12 @@ void lawn::mousePressEvent(QMouseEvent *e)
         if (empty&&e->x()>100)
         {
             scene()->addItem(p);
+            plantName.clear();
+
         }
 
 
         p=NULL;
-
-
-
-
-
+    }
 
 }

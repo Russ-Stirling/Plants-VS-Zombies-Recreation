@@ -8,6 +8,21 @@ class plant : public QGraphicsPixmapItem
 {
 public:
     plant();
+    void setData(QString plantName);
+
+    double getCost(){return cost;}
+    double getLife(){return life;}
+    double getRange(){return range;}
+    double getDamage(){return damage;}
+    double getRate(){return rate;}
+    double getSeeding(){return seeding;}
+
+    bool getSplash(){return splash;}
+    bool getSlow(){return slow;}
+    bool getBomb(){return bomb;}
+    bool getSun(){return sun;}
+    bool getNeed(){return need;}
+
 protected:
     QString name;
     double cost, life, range, damage, rate, seeding;
