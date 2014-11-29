@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     level_file = new QFile("pvz_levels.csv");
+
     if (level_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
         {
 
@@ -30,14 +31,17 @@ MainWindow::MainWindow(QWidget *parent) :
         //“level:sequence:rows:start:interval:decrement
          level_file->close();
         }
+
     readLevelCSV();
 
     save_file = new QFile("pvz_players.csv");
+
     readPlayerCSV();
         for (int i=0; i<userInfo.size(); i++)
         {
             ui->nameComboBox->addItem(userName[i]+", "+userLevel[i]);
         }
+
     int max = 0;
     for (int i=0; i<userInfo.size(); i++)
     {
@@ -237,9 +241,8 @@ void MainWindow::loadLevel()
 
 void MainWindow::startLevel()
 {
-    timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(10000);
+    plantTimer = new QTimer(this);
+    plantTimer->start(100);
 }
 
 MainWindow::~MainWindow()
@@ -334,7 +337,7 @@ void MainWindow::on_peaShooterButton_clicked()
     //QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Peashooter.png");
 
 
-    ui->graphicsView->setPlant("Peashooter");
+    setPlant("Peashooter");
 }
 
 void MainWindow::on_sunFlowerButton_clicked()
@@ -344,12 +347,62 @@ void MainWindow::on_sunFlowerButton_clicked()
     //QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Sunflower.png");
 
 
-    ui->graphicsView->setPlant("Sunflower");
+    setPlant("Sunflower");
 
 }
 
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
-    qDebug()<<e->globalPos();
+    QPointF test =ui->graphicsView->pos();
+    qDebug()<<test;
+    qDebug()<<e->x()-170;
+    qDebug()<<e->y()-150;
+    int x = e->x()-170;
+    int y = e->y()-150;
+    if (!plantName.isEmpty())
+    {
+        addPlant(x,y);
+    }
+
+}
+
+void MainWindow::addPlant(int x, int y)
+{
+    QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/"+plantName+".png");
+
+    p=new plant;
+    p->setPixmap(test.scaled(100,100));
+    plants.insert(plants.end(),p);
+
+    qDebug()<<x;
+    qDebug()<<y;
+
+
+
+    x = x - x%100;
+    y = y - y%100;
+    p->setPos(x,y);
+    bool empty=true;
+
+    if (!plants.empty())
+    {
+    for (int i=0; i<plants.size()-1; i++)
+        if(plants[i]->pos()==p->pos())
+        {
+            empty=false;
+        }
+    }
+
+    qDebug()<<empty;
+    qDebug()<<x;
+    if (empty&&x>=100)
+    {
+        scene->addItem(p);
+        plantName.clear();
+
+    }
+
+
+    p=NULL;
 }

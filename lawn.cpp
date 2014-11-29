@@ -10,7 +10,7 @@ lawn::lawn(QWidget *parent) :
 {
 }
 
-void lawn::mousePressEvent(QMouseEvent *e)
+/*void lawn::mousePressEvent(QMouseEvent *e)
 {
     qDebug() << e->localPos();
     if (!plantName.isEmpty())
@@ -53,3 +53,4 @@ void lawn::mousePressEvent(QMouseEvent *e)
 
 }
 
+*/

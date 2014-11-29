@@ -32,6 +32,9 @@ public:
     void startLevel();
     QString getName(){return plantName;}
     void buttonsEnabled();
+    void setPlant(QString plant){plantName=plant;}
+    void addPlant(int x, int y);
+
 
 public slots:
     void mousePressEvent(QMouseEvent *e);
@@ -53,7 +56,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *timer;
+    QTimer *plantTimer;
     QFile *save_file, *level_file;
     int level=0, timestamp=0, points=0;
     QString currentUserName;
@@ -61,6 +64,10 @@ private:
     QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement;
 
     QString plantName;
+    QGraphicsPixmapItem *plantPix;
+    QGraphicsItem *plantPixTest;
+    std::vector<QGraphicsPixmapItem *> plants;
+    plant *p;
 
 
 
