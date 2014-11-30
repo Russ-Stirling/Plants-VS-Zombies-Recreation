@@ -44,7 +44,7 @@ public slots:
 
     void addSun();
 
-    void addZombie(int y);
+    void addZombie();
 
 
 
@@ -75,7 +75,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *timer, *plantTimer, *sunTimer;
+    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer;
     QFile *save_file, *level_file;
     int level=0, timestamp=0, points=1500;
     QString currentUserName;

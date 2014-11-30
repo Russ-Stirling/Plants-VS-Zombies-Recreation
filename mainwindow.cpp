@@ -282,13 +282,14 @@ void MainWindow::loadLevel()
 
 void MainWindow::startLevel()
 {
+    zombieIndex=0;
     chosenLevelSequence.clear();
     QString sequence=levelSequence[level-1];
-    qDebug()<<sequence;
+    //qDebug()<<sequence;
     chosenLevelSequence= sequence.split(",");
     //qDebug()<<levelSequence;
-    for (int i=0; i<chosenLevelSequence.size(); i++)
-        qDebug()<<chosenLevelSequence[i];
+    //for (int i=0; i<chosenLevelSequence.size(); i++)
+      //  qDebug()<<chosenLevelSequence[i];
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
@@ -296,6 +297,10 @@ void MainWindow::startLevel()
     sunTimer = new QTimer(this);
     connect(sunTimer, SIGNAL(timeout()), this, SLOT(addSun()));
     sunTimer->start(10000);
+    zombieTimer = new QTimer(this);
+    connect(zombieTimer, SIGNAL(timeout()), this, SLOT(addZombie()));
+    zombieTimer->start(5000);
+
 
 }
 
@@ -457,7 +462,6 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 void MainWindow::addPlant(int x, int y)
 {
     QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/"+plantName+".png");
-    addSun();
     p=new plant;
     p->setPixmap(test.scaled(100,100));
     plants.insert(plants.end(),p);
@@ -505,16 +509,17 @@ void MainWindow::addSun()
 
 
 }
-void MainWindow::addZombie(int y)
+void MainWindow::addZombie()
 {
-    z = new zombie;
-    zombies.insert(zombies.end(),z);
-    QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Zombie.png");//replace zombie with "Zombie"+zombieIndex+".png"
-    z->setPixmap(test.scaled(100,100));
-    z->setPos(999,y);
-    scene->addItem(z);
-    z=NULL;
-    zombieIndex++;
+    if(zombieIndex<chosenLevelSequence.size())
+    {
+        z = new zombie("Zombie"+chosenLevelSequence[zombieIndex]);
+        zombies.insert(zombies.end(),z);
+        z->setPos(999,200);
+        scene->addItem(z);
+        z=NULL;
+        zombieIndex++;
+    }
 }
 
 int MainWindow::random(double x1, double x2)
