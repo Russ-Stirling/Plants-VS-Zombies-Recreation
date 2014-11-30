@@ -9,6 +9,7 @@ public:
     zombie();
     zombie(QString filename);
     void advance(int phase);
+    void setVelocity(int v){velocity=v;}
 private:
     int velocity =1;
 };

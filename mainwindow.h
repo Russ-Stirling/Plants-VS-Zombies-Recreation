@@ -46,6 +46,8 @@ public slots:
 
     void addZombie();
 
+    void collision();
+
 
 
 private slots:

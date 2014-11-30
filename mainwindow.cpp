@@ -293,7 +293,9 @@ void MainWindow::startLevel()
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(collision()));
     timer->start(10);
+
     sunTimer = new QTimer(this);
     connect(sunTimer, SIGNAL(timeout()), this, SLOT(addSun()));
     sunTimer->start(10000);
@@ -571,4 +573,28 @@ void MainWindow::on_repeaterButton_clicked()
     buttonsEnabled();
     ui->repeaterButton->setDisabled(true);
     setPlant("Repeater");
+}
+
+void MainWindow::collision()
+{
+    QString test = "0";
+    for (int i=0; i<zombies.size(); i++)
+    {
+
+
+        for (int j=0; j<plants.size(); j++)
+        {
+
+            qDebug()<<zombies[i]->x();
+            qDebug()<<plants[j]->x()+100;
+
+
+            if(zombies[i]->x()>=plants[j]->x()+90&&zombies[i]->x()<=plants[j]->x()+100)
+            {
+                test="success";
+                qDebug()<<test;
+                zombies[i]->setVelocity(0);
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 #include "zombie.h"
-
+#include "plant.h"
+#include <QDebug>
 zombie::zombie()
 {
 }
@@ -14,6 +15,9 @@ void zombie::advance(int phase)
 
 
     setPos(x()-velocity,y());
-
+    if (velocity==0)
+    {
+        qDebug()<<velocity;
+    }
 
 }
