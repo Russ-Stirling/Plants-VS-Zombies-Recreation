@@ -12,6 +12,8 @@
 #include <QImage>
 #include "QFile"
 #include <QString>
+#include "sun.h"
+#include "zombie.h"
 
 namespace Ui {
 class MainWindow;
@@ -34,10 +36,15 @@ public:
     void buttonsEnabled();
     void setPlant(QString plant){plantName=plant;}
     void addPlant(int x, int y);
+    int random(double x1, double x2);
 
 
 public slots:
     void mousePressEvent(QMouseEvent *e);
+
+    void addSun();
+
+    void addZombie(int y);
 
 
 
@@ -53,21 +60,38 @@ private slots:
     void on_sunFlowerButton_clicked();
 
 
+    void on_cherryBombButton_clicked();
+
+    void on_wallNutButton_clicked();
+
+    void on_potatoeMineButton_clicked();
+
+    void on_snowPeaButton_clicked();
+
+    void on_chomperButton_clicked();
+
+    void on_repeaterButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *plantTimer;
+    QTimer *timer, *plantTimer, *sunTimer;
     QFile *save_file, *level_file;
-    int level=0, timestamp=0, points=0;
+    int level=0, timestamp=0, points=1500;
     QString currentUserName;
     QStringList userInfo, userTimestamp, userName, userLevel;
-    QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement;
+    QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement, chosenLevelSequence;
 
     QString plantName;
     QGraphicsPixmapItem *plantPix;
     QGraphicsItem *plantPixTest;
-    std::vector<QGraphicsPixmapItem *> plants;
+    std::vector<plant *> plants;
     plant *p;
+    std::vector<sun *> suns;
+    sun *s;
+    std::vector<zombie *> zombies;
+    zombie *z;
+    int zombieIndex=0;
 
 
 

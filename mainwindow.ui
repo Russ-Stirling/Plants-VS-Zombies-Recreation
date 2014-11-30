@@ -21,17 +21,13 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <y>10</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/Peashooter.png</normaloff>reasources/Peashooter.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -46,18 +42,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>295</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <x>170</x>
+      <y>100</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/Sunflower.png</normaloff>reasources/Sunflower.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -73,17 +65,13 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <y>10</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/PotatoMine.png</normaloff>reasources/PotatoMine.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -98,18 +86,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>545</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <x>420</x>
+      <y>100</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/Wallnut.png</normaloff>reasources/Wallnut.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -125,17 +109,13 @@
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <y>10</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/Chomper.png</normaloff>reasources/Chomper.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -150,18 +130,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>795</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <x>670</x>
+      <y>100</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/SnowPea.png</normaloff>reasources/SnowPea.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -176,18 +152,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1045</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <x>920</x>
+      <y>100</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/Repeater.png</normaloff>reasources/Repeater.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -203,17 +175,13 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>20</y>
-      <width>125</width>
-      <height>125</height>
+      <y>10</y>
+      <width>250</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>reasources/CherryBomb.png</normaloff>reasources/CherryBomb.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -250,7 +218,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>150</y>
+      <y>190</y>
       <width>1000</width>
       <height>500</height>
      </rect>
@@ -708,7 +676,7 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>270</y>
+      <y>310</y>
       <width>50</width>
       <height>30</height>
      </rect>
@@ -721,7 +689,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>270</y>
+      <y>310</y>
       <width>50</width>
       <height>30</height>
      </rect>
@@ -734,7 +702,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
+      <y>310</y>
       <width>50</width>
       <height>30</height>
      </rect>
@@ -747,7 +715,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
+      <y>280</y>
       <width>50</width>
       <height>31</height>
      </rect>
@@ -760,7 +728,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>210</y>
+      <y>250</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -773,7 +741,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>180</y>
+      <y>220</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -799,7 +767,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>241</y>
+      <y>281</y>
       <width>99</width>
       <height>29</height>
      </rect>
@@ -809,13 +777,141 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>190</y>
       <width>150</width>
       <height>30</height>
      </rect>
     </property>
     <property name="currentText">
      <string extracomment="Select Name"/>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="sunFlowerprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>160</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="wallNutprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>160</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="snowPeaprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>160</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="repeaterprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>160</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="peaShooterprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>70</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="cherryBombprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>70</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="potatoeMineprogressBar">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>70</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="chomperProgressBar_">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>70</y>
+      <width>250</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

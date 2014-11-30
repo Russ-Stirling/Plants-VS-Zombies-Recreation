@@ -10,6 +10,7 @@
 #include "QGraphicsItem"
 #include "QGraphicsPixmapItem"
 #include "plant.h"
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -49,6 +50,40 @@ MainWindow::MainWindow(QWidget *parent) :
             max=i;
     }
     ui->nameComboBox->setCurrentIndex(max);
+
+    QIcon peashooter("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Peashooter.png");
+    QIcon cherryBomb("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/CherryBomb.png");
+    QIcon potatoMine("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/PotatoMine.png");
+    QIcon sunFlower("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Sunflower.png");
+    QIcon snowPea("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/SnowPea.png");
+    QIcon wallNut("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Wallnut.png");
+    QIcon repeater("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Repeater.png");
+    QIcon chomper("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Chomper.png");
+
+    ui->peaShooterButton->setText("Peashooter\nCost:100");
+    ui->peaShooterButton->setIcon(peashooter);
+
+    ui->cherryBombButton->setIcon(cherryBomb);
+    ui->cherryBombButton->setText("Cherry Bomb\nCost:100");
+
+    ui->potatoeMineButton->setIcon(potatoMine);
+    ui->potatoeMineButton->setText("Potatoe Mine\nCost:25");
+
+    ui->sunFlowerButton->setIcon(sunFlower);
+    ui->sunFlowerButton->setText("Sunflower\nCost:100");
+
+    ui->snowPeaButton->setIcon(snowPea);
+    ui->snowPeaButton->setText("Snow Pea\nCost:100");
+
+    ui->wallNutButton->setIcon(wallNut);
+    ui->wallNutButton->setText("Wall Nut\nCost:100");
+
+    ui->repeaterButton->setIcon(repeater);
+    ui->repeaterButton->setText("Repeater\nCost:100");
+
+    ui->chomperButton->setIcon(chomper);
+    ui->chomperButton->setText("Chomper\nCost:100");
+
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
     scene = new QGraphicsScene(this);   // scene holds all objects in the scene
@@ -82,6 +117,9 @@ void MainWindow::readLevelCSV()
                      infoList = line.split(":");
 
                      levelSequence << infoList[1];
+
+
+                     //for(int i=0; i<)
                      levelRows << infoList[2];
                      levelStart << infoList[3];
                      levelInterval << infoList[4];
@@ -139,7 +177,10 @@ void MainWindow::readPlayerCSV()
 
 void MainWindow::loadLevel()
 {
-
+    scene->clear();
+    plants.clear();
+    suns.clear();
+    zombies.clear();
     QPen my_pen = QPen(Qt::black);
     QBrush my_brush1 = QBrush(Qt::darkGreen);
     QBrush my_brush2 = QBrush(Qt::green);
@@ -241,8 +282,21 @@ void MainWindow::loadLevel()
 
 void MainWindow::startLevel()
 {
-    plantTimer = new QTimer(this);
-    plantTimer->start(100);
+    chosenLevelSequence.clear();
+    QString sequence=levelSequence[level-1];
+    qDebug()<<sequence;
+    chosenLevelSequence= sequence.split(",");
+    //qDebug()<<levelSequence;
+    for (int i=0; i<chosenLevelSequence.size(); i++)
+        qDebug()<<chosenLevelSequence[i];
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    timer->start(10);
+    sunTimer = new QTimer(this);
+    connect(sunTimer, SIGNAL(timeout()), this, SLOT(addSun()));
+    sunTimer->start(10000);
+
 }
 
 MainWindow::~MainWindow()
@@ -259,15 +313,21 @@ void MainWindow::on_startButton_clicked()
 }
 
 void MainWindow::on_newButton_clicked()
-{
-    scene->clear();
-    level=1;
-    ui->levelLabel->setText(QString::number(level));
-    currentUserName = ui->nameLineEdit->text();
-    readPlayerCSV();
-    timestamp= QDateTime::currentDateTime().toTime_t();
-    //qDebug() << userName;
-    if (save_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
+{   QMessageBox msgBox;
+    msgBox.setText("Create new profile?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    int selection = msgBox.exec();
+    switch (selection)
+    {
+    case QMessageBox::Ok:
+    {
+        level=1;
+        ui->levelLabel->setText(QString::number(level));
+        currentUserName = ui->nameLineEdit->text();
+        readPlayerCSV();
+        timestamp= QDateTime::currentDateTime().toTime_t();
+        //qDebug() << userName;
+        if (save_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
         {
 
          QTextStream out(save_file);
@@ -280,10 +340,19 @@ void MainWindow::on_newButton_clicked()
 
          save_file->close();
         }
-
-    ui->nameComboBox->addItem(currentUserName+", "+QString::number(level));
-
-    loadLevel();
+        ui->nameComboBox->addItem(currentUserName+", "+QString::number(level));
+        loadLevel();
+        break;
+    }
+    case QMessageBox::Cancel:
+    {
+        break;
+    }
+    default:
+    {
+        break;
+    }
+    }
 }
 
 void MainWindow::on_deleteButton_clicked()
@@ -345,8 +414,6 @@ void MainWindow::on_sunFlowerButton_clicked()
     buttonsEnabled();
     ui->sunFlowerButton->setDisabled(true);
     //QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Sunflower.png");
-
-
     setPlant("Sunflower");
 
 }
@@ -354,29 +421,49 @@ void MainWindow::on_sunFlowerButton_clicked()
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
-    QPointF test =ui->graphicsView->pos();
-    qDebug()<<test;
-    qDebug()<<e->x()-170;
-    qDebug()<<e->y()-150;
+
+    //qDebug()<<test;
+    //qDebug()<<e->x()-170;
+    //qDebug()<<e->y()-150;
+   // addZombie(400);
     int x = e->x()-170;
-    int y = e->y()-150;
+    int y = e->y()-190;
+
     if (!plantName.isEmpty())
     {
         addPlant(x,y);
     }
 
+    for (int i=0; i<suns.size(); i++)
+    {
+        if (x>=suns[i]->x()&&x<=(suns[i]->x()+50))
+        {
+            if (y>=suns[i]->y()&&y<=(suns[i]->y()+50))
+            {
+                points= points+suns[i]->getPoints();
+                ui->pointsLabel->setText(QString::number(points));
+                scene->removeItem(suns[i]);
+            }
+        }
+        else if(suns[i]->x()==1000&&suns[i]->y()==500)
+        {
+            scene->removeItem(suns[i]);
+        }
+    }
 }
+
+
 
 void MainWindow::addPlant(int x, int y)
 {
     QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/"+plantName+".png");
-
+    addSun();
     p=new plant;
     p->setPixmap(test.scaled(100,100));
     plants.insert(plants.end(),p);
 
-    qDebug()<<x;
-    qDebug()<<y;
+    //qDebug()<<x;
+    //qDebug()<<y;
 
 
 
@@ -394,8 +481,8 @@ void MainWindow::addPlant(int x, int y)
         }
     }
 
-    qDebug()<<empty;
-    qDebug()<<x;
+    //qDebug()<<empty;
+    //qDebug()<<x;
     if (empty&&x>=100)
     {
         scene->addItem(p);
@@ -405,4 +492,78 @@ void MainWindow::addPlant(int x, int y)
 
 
     p=NULL;
+}
+
+void MainWindow::addSun()
+{
+    s = new sun;
+    suns.insert(suns.end(),s);
+    s->setPos(random(100,900),0);
+    s->setStop(random(50,450));
+    scene->addItem(s);
+    s=NULL;
+
+
+}
+void MainWindow::addZombie(int y)
+{
+    z = new zombie;
+    zombies.insert(zombies.end(),z);
+    QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Zombie.png");//replace zombie with "Zombie"+zombieIndex+".png"
+    z->setPixmap(test.scaled(100,100));
+    z->setPos(999,y);
+    scene->addItem(z);
+    z=NULL;
+    zombieIndex++;
+}
+
+int MainWindow::random(double x1, double x2)
+{
+    double returned;
+    returned = x1 + ((qrand()/(double(RAND_MAX)+x2))*(x2-x1));
+    int value = static_cast<int>(returned);
+    return value;
+}
+
+void MainWindow::on_cherryBombButton_clicked()
+{
+    buttonsEnabled();
+    ui->cherryBombButton->setDisabled(true);
+    setPlant("CherryBomb");
+}
+
+void MainWindow::on_wallNutButton_clicked()
+{
+    buttonsEnabled();
+    ui->wallNutButton->setDisabled(true);
+    //QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/Sunflower.png");
+    setPlant("Wallnut");
+}
+
+void MainWindow::on_potatoeMineButton_clicked()
+{
+    buttonsEnabled();
+    ui->potatoeMineButton->setDisabled(true);
+    setPlant("PotatoMine");
+}
+
+void MainWindow::on_snowPeaButton_clicked()
+{
+    buttonsEnabled();
+    ui->snowPeaButton->setDisabled(true);
+    setPlant("SnowPea");
+}
+
+void MainWindow::on_chomperButton_clicked()
+{
+    buttonsEnabled();
+    ui->chomperButton->setDisabled(true);
+    setPlant("Chomper");
+}
+
+void MainWindow::on_repeaterButton_clicked()
+{
+    buttonsEnabled();
+    ui->repeaterButton->setDisabled(true);
+    setPlant("Repeater");
 }
