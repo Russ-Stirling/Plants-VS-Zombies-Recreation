@@ -11,6 +11,8 @@
 #include "QGraphicsPixmapItem"
 #include "plant.h"
 #include <QMessageBox>
+#include <QSpacerItem>
+#include <QGridLayout>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -19,21 +21,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     level_file = new QFile("pvz_levels.csv");
-
+/*
     if (level_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
         {
 
          QTextStream out(level_file);
 
          out<< "1" << ":" << "1,1,1,1,2" << ":" << "1" << ":" << "20" << ":" << "1" << ":" << "0.2" << "\n";
-         out<< "2" << ":" << "1,1,1,2,3,1,3,1,3,3" << ":" << "3" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
+        out<< "2" << ":" << "1,1,1,2,3,1,3,1,3,3" << ":" << "3" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
+         out<< "3" << ":" << "1,1,1,2,3,1,3,1,1,1,4,5" << ":" << "5" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
+
 
 
         //“level:sequence:rows:start:interval:decrement
          level_file->close();
         }
-
+*/
     readLevelCSV();
+    if (levelSequence[0].isEmpty())
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Error, no level data");
+        msgBox.exec();
+        this->close();
+    }
 
     save_file = new QFile("pvz_players.csv");
 
@@ -538,19 +549,15 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 void MainWindow::addPlant(int x, int y)
 {
     QPixmap test("C:/Qt/Qt5.3.1/Tools/QtCreator/bin/plantsVSzombies/reasources/"+plantName+".png");
-    p=new plant;
-    p->setData(plantName);
-    p->setPixmap(test.scaled(100,100));
-    plants.insert(plants.end(),p);
+
     x = x - x%100;
     y = y - y%100;
-    p->setPos(x,y);
     bool empty=true;
 
     if (!plants.empty())
     {
-    for (int i=0; i<plants.size()-1; i++)
-        if(plants[i]->pos()==p->pos())
+    for (int i=0; i<plants.size(); i++)
+        if(plants[i]->x()==x&&plants[i]->y()==y)
         {
             empty=false;
         }
@@ -560,14 +567,14 @@ void MainWindow::addPlant(int x, int y)
     qDebug()<<levelRows[level-1].toInt()*100;
     if (levelRows[level-1]=="1")
     {
-        if(p->y()!= 200)
+        if(y!= 200)
         {
             empty=false;
         }
     }
     if (levelRows[level-1]=="3")
     {
-        if(!(p->y() >= 100&&p->y()<=300))
+        if(!(y >= 100&&y<=300))
         {
             empty=false;
         }
@@ -579,6 +586,12 @@ void MainWindow::addPlant(int x, int y)
     //qDebug()<<x;
     if (empty&&x>=100)
     {
+        p=new plant;
+        p->setData(plantName);
+        p->setPixmap(test.scaled(100,100));
+        p->setPos(x,y);
+
+        plants.insert(plants.end(),p);
         scene->addItem(p);
         points= points - p->getCost();
         ui->pointsLabel->setText(QString::number(points));
@@ -818,9 +831,13 @@ void MainWindow::attack()
                     plants[j]->damageTaken(zombies[i]->getAttack());
                     if (plants[j]->getLife()<=0)
                     {
+                        p=plants[j];
                         scene->removeItem(plants[j]);
                         plants.erase(plants.begin()+j);
                         zombies[i]->setVelocity(zombies[i]->getDefaultVelocity());
+                        delete p;
+                        p=NULL;
+                        j--;
                     }
                 }
             }
@@ -854,6 +871,13 @@ void MainWindow::nextLevel()
     delete attacking;
     delete sunflower;
     delete plantTimer;
+    if (levelSequence[level-1].isEmpty())
+    {
+        level=0;
+        QMessageBox msgBox;
+        msgBox.setText("You Won");
+        msgBox.exec();
+    }
     loadLevel();
 }
 
@@ -868,13 +892,27 @@ void MainWindow::on_restartButton_clicked()
     plantTimer->stop();
 
     QMessageBox msgBox;
+    //QSpacerItem* horizontalSpacer = new QSpacerItem(444, 202, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //dynamic_cast<QGridLayout*>(msgBox.layout()->addItem(horizontalSpacer, 0, 0, 0, 0));
+    //(msgBox.layout()->addItem(horizontalSpacer));
+    //tried to use spacers not working out though
+
     msgBox.setText("Are you sure you want to restart?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+
+
+
+
     int selection = msgBox.exec();
+    qDebug()<<msgBox.width();
+
+    qDebug()<<msgBox.height();
+
     switch (selection)
     {
     case QMessageBox::Ok:
     {
+
         delete timer;
         delete sunTimer;
         delete zombieTimer;
@@ -887,6 +925,7 @@ void MainWindow::on_restartButton_clicked()
     }
     case QMessageBox::Cancel:
     {
+
         timer->start();
         sunTimer->start();
         zombieTimer->start();
