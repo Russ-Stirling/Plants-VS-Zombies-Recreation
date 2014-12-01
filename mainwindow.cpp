@@ -86,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->chomperButton->setText("Chomper\nCost:150");
 
     buttonsDisabled();
-    connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
     scene = new QGraphicsScene(this);   // scene holds all objects in the scene
     ui->graphicsView->setScene(scene);  // graphicsView is the viewport on to the scene
@@ -704,6 +703,51 @@ void MainWindow::on_restartButton_clicked()
         delete seeding;
         delete attacking;
         delete sunflower;
+        loadLevel();
+        break;
+    }
+    case QMessageBox::Cancel:
+    {
+        timer->start();
+        sunTimer->start();
+        zombieTimer->start();
+        seeding->start();
+        attacking->start();
+        sunflower->start();
+        break;
+    }
+    default:
+    {
+        break;
+    }
+
+    }
+}
+
+void MainWindow::on_quitButton_clicked()
+{
+    timer->stop();
+    sunTimer->stop();
+    zombieTimer->stop();
+    seeding->stop();
+    attacking->stop();
+    sunflower->stop();
+
+    QMessageBox msgBox;
+    msgBox.setText("Are you sure you want to quit?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    int selection = msgBox.exec();
+    switch (selection)
+    {
+    case QMessageBox::Ok:
+    {
+        delete timer;
+        delete sunTimer;
+        delete zombieTimer;
+        delete seeding;
+        delete attacking;
+        delete sunflower;
+        level=0;
         loadLevel();
         break;
     }

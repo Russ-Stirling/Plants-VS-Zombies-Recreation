@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     plant.cpp \
     sun.cpp \
     lawnmower.cpp \
-    zombie.cpp
+    zombie.cpp \
+    bullet.cpp
 
 HEADERS  += mainwindow.h \
     lawn.h \
     plant.h \
     sun.h \
     lawnmower.h \
-    zombie.h
+    zombie.h \
+    bullet.h
 
 FORMS    += mainwindow.ui
 

@@ -85,6 +85,8 @@ private slots:
 
     void on_restartButton_clicked();
 
+    void on_quitButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
