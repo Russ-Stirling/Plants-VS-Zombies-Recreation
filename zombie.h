@@ -9,9 +9,11 @@ public:
     zombie();
     zombie(QString filename);
     void advance(int phase);
-    void setVelocity(int v){velocity=v;}
+    void setVelocity(double v){velocity=v;}
+    int getAttack(){return attack;}
 private:
-    int velocity =1;
+    QString name;
+    double life, attack, rate, velocity;
 };
 
 #endif // ZOMBIE_H

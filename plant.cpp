@@ -3,6 +3,7 @@
 #include "QColor"
 #include "QBrush"
 #include "QPainter"
+#include <QDebug>
 
 plant::plant()
 {
@@ -151,5 +152,19 @@ void plant::setData(QString plantName)
 
 }
 
+void plant::damageTaken(int damage)
+{
+    life=life-damage;
+    if (name=="Wallnut")
+    {
+        this->setPixmap(this->pixmap().scaled(this->pixmap().height()-1, this->pixmap().width()-1));
+        qDebug()<<life;
+    }
+    else
+    {
+        this->setPixmap(this->pixmap().scaled(this->pixmap().height()-2, this->pixmap().width()-2));
 
+    }
 
+    this->update();
+}

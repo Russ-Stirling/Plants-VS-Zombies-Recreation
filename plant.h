@@ -9,6 +9,9 @@ class plant : public QGraphicsPixmapItem
 public:
     plant();
     void setData(QString plantName);
+    void damageTaken(int damage);
+
+    QString getName(){return name;}
 
     double getCost(){return cost;}
     double getLife(){return life;}

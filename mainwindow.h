@@ -34,6 +34,7 @@ public:
     void startLevel();
     QString getName(){return plantName;}
     void buttonsEnabled();
+    void buttonsDisabled();
     void setPlant(QString plant){plantName=plant;}
     void addPlant(int x, int y);
     int random(double x1, double x2);
@@ -44,9 +45,14 @@ public slots:
 
     void addSun();
 
+    void addSunFromSunflower();
+
     void addZombie();
 
     void collision();
+
+    void attack();
+
 
 
 
@@ -77,7 +83,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer;
+    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower;
     QFile *save_file, *level_file;
     int level=0, timestamp=0, points=1500;
     QString currentUserName;
@@ -94,6 +100,7 @@ private:
     std::vector<zombie *> zombies;
     zombie *z;
     int zombieIndex=0;
+    bool coll=true;
 
 
 
