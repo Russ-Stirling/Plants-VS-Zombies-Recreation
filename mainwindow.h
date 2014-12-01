@@ -42,6 +42,7 @@ public:
     int random(double x1, double x2);
     void levelLost();
     void nextLevel();
+    void addBullet(int x, int y, QString type);
 
 
 public slots:
@@ -56,6 +57,8 @@ public slots:
     void collision();
 
     void attack();
+
+    void plantsFire();
 
 
 
@@ -93,7 +96,7 @@ private:
     QGraphicsScene *scene;
     QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower;
     QFile *save_file, *level_file;
-    int level=0, timestamp=0, points=100;
+    int level=0, timestamp=0, points=1500;
     QString currentUserName;
     QStringList userInfo, userTimestamp, userName, userLevel;
     QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement, chosenLevelSequence;

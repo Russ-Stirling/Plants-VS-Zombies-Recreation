@@ -16,6 +16,7 @@ zombie::zombie(QString filename)
         attack=1;
         rate=0.5;
         setVelocity(1);
+        defaultVelocity=1;
     }
     else if (filename=="Zombie2")
     {
@@ -23,6 +24,8 @@ zombie::zombie(QString filename)
         attack=1;
         rate=0.5;
         setVelocity(0.75);
+        defaultVelocity=0.75;
+
     }
     else if (filename=="Zombie3")
     {
@@ -30,6 +33,8 @@ zombie::zombie(QString filename)
         attack=1;
         rate=0.5;
         setVelocity(1);
+        defaultVelocity=1;
+
 
     }
     else if (filename=="Zombie4")
@@ -38,6 +43,8 @@ zombie::zombie(QString filename)
         attack=1;
         rate=0.5;
         setVelocity(1);
+        defaultVelocity=1;
+
     }
     else if (filename=="Zombie5")
     {
@@ -45,12 +52,22 @@ zombie::zombie(QString filename)
         attack=1;
         rate=0.5;
         setVelocity(1);
+        defaultVelocity=1;
+
     }
 }
 
 void zombie::advance(int phase)
 {
 
+    if (name=="Zombie5")
+    {
+        if (life<=8)
+        {
+            defaultVelocity=2;
+            setVelocity(2);
+        }
+    }
 
     setPos(x()-velocity,y());
 

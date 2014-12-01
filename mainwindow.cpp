@@ -165,6 +165,8 @@ void MainWindow::loadLevel()
     plants.clear();
     suns.clear();
     zombies.clear();
+    bullets.clear();
+    lawnmowers.clear();
     qDebug()<<zombies.size();
 
     QPen my_pen = QPen(Qt::black);
@@ -301,6 +303,10 @@ void MainWindow::startLevel()
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(timer, SIGNAL(timeout()), this, SLOT(collision()));
     timer->start(10);
+
+    plantTimer= new QTimer(this);
+    connect(plantTimer, SIGNAL(timeout()), this, SLOT(plantsFire()));
+    plantTimer->start(1500);
 
     sunTimer = new QTimer(this);
     connect(sunTimer, SIGNAL(timeout()), this, SLOT(addSun()));
@@ -522,12 +528,10 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
                 ui->pointsLabel->setText(QString::number(points));
                 buttonsEnabled();
                 scene->removeItem(suns[i]);
+                suns.erase(suns.begin()+i);
             }
         }
-        else if(suns[i]->x()==1000&&suns[i]->y()==500)
-        {
-            scene->removeItem(suns[i]);
-        }
+
     }
 }
 
@@ -658,6 +662,12 @@ void MainWindow::addZombie()
         z=NULL;
         zombieIndex++;
     }
+
+
+    else if((!(zombieIndex<chosenLevelSequence.size()))&&zombies.size()==0)
+    {
+        nextLevel();
+    }
 }
 
 int MainWindow::random(double x1, double x2)
@@ -713,6 +723,7 @@ void MainWindow::on_repeaterButton_clicked()
 
 void MainWindow::collision()
 {
+    int bull=bullets.size();
     for (int i=0; i<zombies.size(); i++)
     {
 
@@ -734,7 +745,7 @@ void MainWindow::collision()
             }
             if (coll)
             {
-                zombies[i]->setVelocity(1);
+                zombies[i]->setVelocity(zombies[i]->getDefaultVelocity());
             }
 
         }
@@ -744,6 +755,51 @@ void MainWindow::collision()
             break;
         }
         coll=true;
+
+        for (int j=0; j<bullets.size(); j++)
+        {
+            if(bullets[j]->x()>=1000)
+            {
+                b=bullets[j];
+
+                scene->removeItem(bullets[j]);
+                bullets.erase(bullets.begin()+j);
+                delete b;
+                b=NULL;
+                j--;
+                break;
+            }
+            if (zombies[i]->x()>=bullets[j]->x()+40&&zombies[i]->x()<=bullets[j]->x()+70)
+            {
+                if(zombies[i]->y()==bullets[j]->y())
+                {
+                    zombies[i]->damageTaken(bullets[j]->getDamage());
+
+                    b=bullets[j];
+                    scene->removeItem(bullets[j]);
+                    bullets.erase(bullets.begin()+j);
+                    delete b;
+                    b=NULL;
+                    j--;
+                    break;
+                }
+            }
+
+            if (zombies[i]->getLife()<=0)
+            {
+                z=zombies[i];
+                scene->removeItem(zombies[i]);
+                zombies[i]->setPos(1000,500);
+                zombies.erase(zombies.begin()+i);
+                delete z;
+                z=NULL;
+                i--;
+                break;
+
+
+
+            }
+        }
 
     }
 
@@ -762,9 +818,9 @@ void MainWindow::attack()
                     plants[j]->damageTaken(zombies[i]->getAttack());
                     if (plants[j]->getLife()<=0)
                     {
-                        plants[j]->setPos(1000,500);
                         scene->removeItem(plants[j]);
-                        zombies[i]->setVelocity(1);
+                        plants.erase(plants.begin()+j);
+                        zombies[i]->setVelocity(zombies[i]->getDefaultVelocity());
                     }
                 }
             }
@@ -783,6 +839,7 @@ void MainWindow::levelLost()
     delete seeding;
     delete attacking;
     delete sunflower;
+    delete plantTimer;
     loadLevel();
 
 }
@@ -790,6 +847,13 @@ void MainWindow::levelLost()
 void MainWindow::nextLevel()
 {
     level++;
+    delete timer;
+    delete sunTimer;
+    delete zombieTimer;
+    delete seeding;
+    delete attacking;
+    delete sunflower;
+    delete plantTimer;
     loadLevel();
 }
 
@@ -801,6 +865,7 @@ void MainWindow::on_restartButton_clicked()
     seeding->stop();
     attacking->stop();
     sunflower->stop();
+    plantTimer->stop();
 
     QMessageBox msgBox;
     msgBox.setText("Are you sure you want to restart?");
@@ -816,6 +881,7 @@ void MainWindow::on_restartButton_clicked()
         delete seeding;
         delete attacking;
         delete sunflower;
+        delete plantTimer;
         loadLevel();
         break;
     }
@@ -827,6 +893,7 @@ void MainWindow::on_restartButton_clicked()
         seeding->start();
         attacking->start();
         sunflower->start();
+        plantTimer->start();
         break;
     }
     default:
@@ -882,3 +949,72 @@ void MainWindow::on_quitButton_clicked()
 
     }
 }
+
+void MainWindow::plantsFire()
+{
+    for (int i=0; i<plants.size(); i++)
+    {
+        for (int j=0; j<zombies.size(); j++)
+        {
+            if (plants[i]->y()==zombies[j]->y()&&plants[i]->x()<zombies[j]->x())
+            {
+                if(plants[i]->getName()=="Peashooter")
+                {
+                    addBullet(plants[i]->x(),plants[i]->y(),"1");
+                    break;
+                }
+                else if (plants[i]->getName()=="SnowPea")
+                {
+                    addBullet(plants[i]->x(),plants[i]->y(),"2");
+                    break;
+
+                }
+                else if (plants[i]->getName()=="Repeater")
+                {
+                    addBullet(plants[i]->x(),plants[i]->y(),"3");
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::addBullet(int x, int y, QString type)
+{
+    if (type=="1")
+    {
+        b=new bullet();
+        b->setPos(x,y);
+        bullets.insert(bullets.end(),b);
+        scene->addItem(b);
+        b=NULL;
+    }
+    else if (type=="2")
+    {
+        b=new bullet(true);
+        b->setPos(x,y);
+        bullets.insert(bullets.end(),b);
+        scene->addItem(b);
+        b=NULL;
+    }
+
+    else if(type=="3")
+    {
+        b=new bullet();
+        b->setPos(x,y);
+        bullets.insert(bullets.end(),b);
+        scene->addItem(b);
+        b=NULL;
+
+        b=new bullet();
+        b->setPos(x+100,y);
+        bullets.insert(bullets.end(),b);
+        scene->addItem(b);
+        b=NULL;
+    }
+
+
+
+
+}
+
