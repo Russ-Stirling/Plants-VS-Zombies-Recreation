@@ -277,6 +277,8 @@ void MainWindow::startLevel()
     //for (int i=0; i<chosenLevelSequence.size(); i++)
       //  qDebug()<<chosenLevelSequence[i];
 
+    ui->pointsLabel->setText(QString::number(points));
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(timer, SIGNAL(timeout()), this, SLOT(collision()));
@@ -299,7 +301,10 @@ void MainWindow::startLevel()
     sunflower = new QTimer(this);
     connect(sunflower, SIGNAL(timeout()), this, SLOT(addSunFromSunflower()));
     //sunflower->start(5000);
-
+    for (int i=0; i<levelRows.size(); i++)
+    {
+        qDebug() << levelRows[i];
+    }
 }
 
 MainWindow::~MainWindow()
@@ -390,14 +395,57 @@ void MainWindow::on_deleteButton_clicked()
 
 void MainWindow::buttonsEnabled()
 {
-    ui->peaShooterButton->setEnabled(true);
-    ui->sunFlowerButton->setEnabled(true);
-    ui->snowPeaButton->setEnabled(true);
-    ui->cherryBombButton->setEnabled(true);
-    ui->chomperButton->setEnabled(true);
-    ui->potatoeMineButton->setEnabled(true);
-    ui->repeaterButton->setEnabled(true);
-    ui->wallNutButton->setEnabled(true);
+    if (points>=200)
+    {
+        ui->peaShooterButton->setEnabled(true);
+        ui->sunFlowerButton->setEnabled(true);
+        ui->snowPeaButton->setEnabled(true);
+        ui->cherryBombButton->setEnabled(true);
+        ui->chomperButton->setEnabled(true);
+        ui->potatoeMineButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(true);
+        ui->wallNutButton->setEnabled(true);
+    }
+    else if (points>=175)
+    {
+        ui->snowPeaButton->setEnabled(true);
+        ui->peaShooterButton->setEnabled(true);
+        ui->sunFlowerButton->setEnabled(true);
+        ui->cherryBombButton->setEnabled(true);
+        ui->chomperButton->setEnabled(true);
+        ui->potatoeMineButton->setEnabled(true);
+        ui->wallNutButton->setEnabled(true);
+    }
+
+    else if (points>=150)
+    {
+        ui->peaShooterButton->setEnabled(true);
+        ui->sunFlowerButton->setEnabled(true);
+        ui->cherryBombButton->setEnabled(true);
+        ui->potatoeMineButton->setEnabled(true);
+        ui->wallNutButton->setEnabled(true);
+    }
+
+    else if (points>=100)
+    {
+        ui->peaShooterButton->setEnabled(true);
+        ui->sunFlowerButton->setEnabled(true);
+        ui->potatoeMineButton->setEnabled(true);
+        ui->wallNutButton->setEnabled(true);
+    }
+
+    else if (points>=50)
+    {
+        ui->sunFlowerButton->setEnabled(true);
+        ui->potatoeMineButton->setEnabled(true);
+        ui->wallNutButton->setEnabled(true);
+    }
+    else if (points>=25)
+    {
+        ui->potatoeMineButton->setEnabled(true);
+    }
+
+
 
 
 }
@@ -454,6 +502,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
             {
                 points= points+suns[i]->getPoints();
                 ui->pointsLabel->setText(QString::number(points));
+                buttonsEnabled();
                 scene->removeItem(suns[i]);
             }
         }
@@ -471,12 +520,6 @@ void MainWindow::addPlant(int x, int y)
     p->setData(plantName);
     p->setPixmap(test.scaled(100,100));
     plants.insert(plants.end(),p);
-
-    //qDebug()<<x;
-    //qDebug()<<y;
-
-
-
     x = x - x%100;
     y = y - y%100;
     p->setPos(x,y);
@@ -491,15 +534,38 @@ void MainWindow::addPlant(int x, int y)
         }
     }
 
+    qDebug()<<levelRows[level-1];
+    qDebug()<<levelRows[level-1].toInt()*100;
+    if (levelRows[level-1]=="1")
+    {
+        if(p->y()!= 200)
+        {
+            empty=false;
+        }
+    }
+    if (levelRows[level-1]=="3")
+    {
+        if(!(p->y() >= 100&&p->y()<=300))
+        {
+            empty=false;
+        }
+    }
+
+
+
     //qDebug()<<empty;
     //qDebug()<<x;
     if (empty&&x>=100)
     {
         scene->addItem(p);
+        points= points - p->getCost();
+        ui->pointsLabel->setText(QString::number(points));
+
         if (p->getName()=="Sunflower")
         {
             sunflower->start(5000);
         }
+
         plantName.clear();
 
 
@@ -513,8 +579,19 @@ void MainWindow::addSun()
 {
     s = new sun;
     suns.insert(suns.end(),s);
-    s->setPos(random(100,900),0);
-    s->setStop(random(50,450));
+    s->setPos(random(1,9)*100,0);
+    if (levelRows[level-1]=="1")
+    {
+        s->setStop(250);
+    }
+    else if (levelRows[level-1]=="3")
+    {
+        s->setStop(random(1,3)*100+50);
+    }
+    else
+    {
+        s->setStop(random(0,4)*100+50);
+    }
     scene->addItem(s);
     s=NULL;
 }
@@ -542,7 +619,23 @@ void MainWindow::addZombie()
     {
         z = new zombie("Zombie"+chosenLevelSequence[zombieIndex]);
         zombies.insert(zombies.end(),z);
-        z->setPos(999,200);
+        if (levelRows[level-1]=="1")
+        {
+            z->setPos(999,200);
+        }
+        if (levelRows[level-1]=="3")
+        {
+            qDebug()<<level;
+
+            z->setPos(999,random(1,3)*100);
+            qDebug()<<z->y();
+        }
+
+        if (levelRows[level-1]=="5")
+        {
+            z->setPos(999,random(0,4)*100);
+        }
+
         scene->addItem(z);
         z=NULL;
         zombieIndex++;
@@ -551,8 +644,9 @@ void MainWindow::addZombie()
 
 int MainWindow::random(double x1, double x2)
 {
-    double returned;
-    returned = x1 + ((qrand()/(double(RAND_MAX)+x2))*(x2-x1));
+    int returned;
+    x2=x2+1;
+    returned = x1 + ((qrand()/(double(RAND_MAX)))*(x2-x1));
     int value = static_cast<int>(returned);
     return value;
 }
@@ -631,8 +725,9 @@ void MainWindow::collision()
             levelLost();
             break;
         }
+        coll=true;
+
     }
-    coll=true;
 
 }
 
@@ -748,6 +843,7 @@ void MainWindow::on_quitButton_clicked()
         delete attacking;
         delete sunflower;
         level=0;
+        buttonsDisabled();
         loadLevel();
         break;
     }

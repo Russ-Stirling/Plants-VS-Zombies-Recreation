@@ -15,6 +15,7 @@
 #include "sun.h"
 #include "zombie.h"
 #include "lawnmower.h"
+#include "bullet.h"
 
 namespace Ui {
 class MainWindow;
@@ -92,7 +93,7 @@ private:
     QGraphicsScene *scene;
     QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower;
     QFile *save_file, *level_file;
-    int level=0, timestamp=0, points=1500;
+    int level=0, timestamp=0, points=100;
     QString currentUserName;
     QStringList userInfo, userTimestamp, userName, userLevel;
     QStringList levelSequence, levelRows, levelStart, levelInterval, levelDecrement, chosenLevelSequence;
@@ -108,6 +109,9 @@ private:
     zombie *z;
     std::vector<lawnMower *> lawnmowers;
     lawnMower *l;
+    std::vector<bullet *> bullets;
+    bullet *b;
+
     int zombieIndex=0;
     bool coll=true;
 

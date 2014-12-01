@@ -158,7 +158,6 @@ void plant::damageTaken(int damage)
     if (name=="Wallnut")
     {
         this->setPixmap(this->pixmap().scaled(this->pixmap().height()-1, this->pixmap().width()-1));
-        qDebug()<<life;
     }
     else
     {
