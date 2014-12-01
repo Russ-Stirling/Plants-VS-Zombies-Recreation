@@ -165,6 +165,8 @@ void MainWindow::loadLevel()
     plants.clear();
     suns.clear();
     zombies.clear();
+    qDebug()<<zombies.size();
+
     QPen my_pen = QPen(Qt::black);
     QBrush my_brush1 = QBrush(Qt::darkGreen);
     QBrush my_brush2 = QBrush(Qt::green);
@@ -625,6 +627,11 @@ void MainWindow::collision()
             }
 
         }
+        if (zombies[i]->x()<=0)
+        {
+            levelLost();
+            break;
+        }
     }
     coll=true;
 
@@ -651,4 +658,9 @@ void MainWindow::attack()
             }
         }
     }
+}
+
+void MainWindow::levelLost()
+{
+
 }

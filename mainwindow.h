@@ -38,6 +38,7 @@ public:
     void setPlant(QString plant){plantName=plant;}
     void addPlant(int x, int y);
     int random(double x1, double x2);
+    void levelLost();
 
 
 public slots:
