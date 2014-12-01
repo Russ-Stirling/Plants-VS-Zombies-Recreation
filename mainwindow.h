@@ -14,6 +14,7 @@
 #include <QString>
 #include "sun.h"
 #include "zombie.h"
+#include "lawnmower.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,7 @@ public:
     void addPlant(int x, int y);
     int random(double x1, double x2);
     void levelLost();
+    void nextLevel();
 
 
 public slots:
@@ -81,6 +83,8 @@ private slots:
 
     void on_repeaterButton_clicked();
 
+    void on_restartButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -100,6 +104,8 @@ private:
     sun *s;
     std::vector<zombie *> zombies;
     zombie *z;
+    std::vector<lawnMower *> lawnmowers;
+    lawnMower *l;
     int zombieIndex=0;
     bool coll=true;
 

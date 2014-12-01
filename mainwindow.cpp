@@ -662,5 +662,65 @@ void MainWindow::attack()
 
 void MainWindow::levelLost()
 {
+    QMessageBox msgBox;
+    msgBox.setText("zombies ate your brains");
+    msgBox.exec();
+    delete timer;
+    delete sunTimer;
+    delete zombieTimer;
+    delete seeding;
+    delete attacking;
+    delete sunflower;
+    loadLevel();
 
+}
+
+void MainWindow::nextLevel()
+{
+    level++;
+    loadLevel();
+}
+
+void MainWindow::on_restartButton_clicked()
+{
+    timer->stop();
+    sunTimer->stop();
+    zombieTimer->stop();
+    seeding->stop();
+    attacking->stop();
+    sunflower->stop();
+
+    QMessageBox msgBox;
+    msgBox.setText("Are you sure you want to restart?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    int selection = msgBox.exec();
+    switch (selection)
+    {
+    case QMessageBox::Ok:
+    {
+        delete timer;
+        delete sunTimer;
+        delete zombieTimer;
+        delete seeding;
+        delete attacking;
+        delete sunflower;
+        loadLevel();
+        break;
+    }
+    case QMessageBox::Cancel:
+    {
+        timer->start();
+        sunTimer->start();
+        zombieTimer->start();
+        seeding->start();
+        attacking->start();
+        sunflower->start();
+        break;
+    }
+    default:
+    {
+        break;
+    }
+
+    }
 }
