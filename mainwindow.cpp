@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             ui->nameComboBox->addItem(userName[i]+", "+userLevel[i]);
         }
+    ui->levelLabel->setText(QString::number(level));
 
     int max = 0;
     for (int i=0; i<userInfo.size(); i++)
@@ -173,6 +174,14 @@ void MainWindow::loadLevel()
 
     if (level==0)
     {
+        ui->quitButton->setDisabled(true);
+        ui->restartButton->setDisabled(true);
+        ui->newButton->setEnabled(true);
+        ui->startButton->setEnabled(true);
+        ui->deleteButton->setEnabled(true);
+        ui->nameLineEdit->setEnabled(true);
+        ui->nameComboBox->setEnabled(true);
+
         for(int i=0; i<HEIGHT; i=i+100)
         {
             for (int j=0; j<WIDTH; j=j+100)
@@ -276,8 +285,17 @@ void MainWindow::startLevel()
     //qDebug()<<levelSequence;
     //for (int i=0; i<chosenLevelSequence.size(); i++)
       //  qDebug()<<chosenLevelSequence[i];
+    ui->levelLabel->setText(QString::number(level));
 
     ui->pointsLabel->setText(QString::number(points));
+    ui->startButton->setDisabled(true);
+    ui->newButton->setDisabled(true);
+    ui->deleteButton->setDisabled(true);
+    ui->restartButton->setEnabled(true);
+    ui->quitButton->setEnabled(true);
+    ui->nameLineEdit->setDisabled(true);
+    ui->nameComboBox->setDisabled(true);
+
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
