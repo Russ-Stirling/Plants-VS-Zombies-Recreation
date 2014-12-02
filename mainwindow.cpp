@@ -814,7 +814,6 @@ void MainWindow::on_repeaterButton_clicked()
 void MainWindow::collision()
 {
     buttonsEnabled();
-    int bull=bullets.size();
     for (int i=0; i<zombies.size(); i++)
     {
 
@@ -884,11 +883,8 @@ void MainWindow::collision()
                 zombies.erase(zombies.begin()+i);
                 delete z;
                 z=NULL;
-                i--;
+                //i--;
                 break;
-
-
-
             }
         }
         for (int j=0; j<lawnmowers.size(); j++)
@@ -906,7 +902,6 @@ void MainWindow::collision()
                     delete z;
                     z=NULL;
                     break;
-
                 }
         }
 
