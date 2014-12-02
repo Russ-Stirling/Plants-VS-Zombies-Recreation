@@ -8,11 +8,14 @@ sun::sun()
 
 void sun::advance(int phase)
 {
-    if (y()==stop)
+    if (y()>=stop)
     {
         velocity=0;
         life--;
-        if (life==0)
+        life--;
+        life--;
+        life--;
+        if (life<=0)
         {
             setPos(1000,500);
         }

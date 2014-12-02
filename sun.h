@@ -14,7 +14,7 @@ public:
 
 private:
     int points=25;
-    int velocity=1;
+    int velocity=4;
     int life = 750;
     int stop = 400;
 };
