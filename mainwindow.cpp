@@ -395,6 +395,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_startButton_clicked()
 {
     QString levelinfo = ui->nameComboBox->currentText();
+    currentUserName = levelinfo.split(",")[0];
     level = levelinfo.split(" ")[1].toInt();
     qDebug() << level;
     loadLevel();
@@ -1064,6 +1065,36 @@ void MainWindow::nextLevel()
     delete attacking;
     delete sunflower;
     delete plantTimer;
+    readPlayerCSV();
+    timestamp= QDateTime::currentDateTime().toTime_t();
+    int index =ui->nameComboBox->currentIndex();
+
+
+    if (save_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
+        {
+
+         QTextStream out(save_file);
+         for (int i=0; i<index; i++ )
+         {
+           out<<userInfo[i]<<"\n";
+         }
+         out<< timestamp << ":" << currentUserName << ":" << level << "\n";
+         for (int i=index+1; i<userInfo.size(); i++ )
+         {
+           out<<userInfo[i]<<"\n";
+         }
+
+
+         save_file->close();
+        }
+
+    readPlayerCSV();
+    ui->nameComboBox->clear();
+        for (int i=0; i<userInfo.size(); i++)
+        {
+            ui->nameComboBox->addItem(userName[i]+", "+userLevel[i]);
+        }
+
     if (levelSequence[level-1].isEmpty())
     {
         level=0;
