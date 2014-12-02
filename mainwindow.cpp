@@ -1042,6 +1042,7 @@ void MainWindow::attack()
 void MainWindow::levelLost()
 {
     QMessageBox msgBox;
+    points=150;
     msgBox.setText("zombies ate your brains");
     msgBox.exec();
     delete timer;
@@ -1058,6 +1059,7 @@ void MainWindow::levelLost()
 void MainWindow::nextLevel()
 {
     level++;
+    points=150;
     delete timer;
     delete sunTimer;
     delete zombieTimer;
