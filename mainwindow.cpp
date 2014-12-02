@@ -21,14 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     level_file = new QFile("pvz_levels.csv");
-/*
+
     if (level_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
         {
 
          QTextStream out(level_file);
 
          out<< "1" << ":" << "1,1,1,1,2" << ":" << "1" << ":" << "20" << ":" << "1" << ":" << "0.2" << "\n";
-        out<< "2" << ":" << "1,1,1,2,3,1,3,1,3,3" << ":" << "3" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
+         out<< "2" << ":" << "1,1,1,2,3,1,3,1,3,3" << ":" << "3" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
          out<< "3" << ":" << "1,1,1,2,3,1,3,1,1,1,4,5" << ":" << "5" << ":" << "15" << ":" << "2" << ":" << "0.2" << "\n";
 
 
@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
         //“level:sequence:rows:start:interval:decrement
          level_file->close();
         }
-*/
+
     readLevelCSV();
     if (levelSequence[0].isEmpty())
     {
@@ -119,6 +119,8 @@ void MainWindow::readLevelCSV()
     if (level_file->open(QIODevice::ReadOnly))
     {
                  QTextStream text(level_file);
+
+
                  //qDebug() << level_file;
                  QStringList infoList;
 
@@ -194,6 +196,11 @@ void MainWindow::loadLevel()
         ui->deleteButton->setEnabled(true);
         ui->nameLineEdit->setEnabled(true);
         ui->nameComboBox->setEnabled(true);
+        if(ui->nameComboBox->currentText().isEmpty())
+        {
+            ui->deleteButton->setEnabled(false);
+            ui->startButton->setEnabled(false);
+        }
 
         for(int i=0; i<HEIGHT; i=i+100)
         {
@@ -313,7 +320,14 @@ void MainWindow::startLevel()
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(timer, SIGNAL(timeout()), this, SLOT(collision()));
+
     timer->start(10);
+
+    test=new QTimer(this);
+    connect(test, SIGNAL(timeout()), this, SLOT(buttonsEnabled()));
+    test->start(10);
+
+
 
     plantTimer= new QTimer(this);
     connect(plantTimer, SIGNAL(timeout()), this, SLOT(plantsFire()));
@@ -479,15 +493,22 @@ void MainWindow::buttonsEnabled()
         ui->chomperButton->setEnabled(true);
         ui->potatoeMineButton->setEnabled(true);
         ui->wallNutButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(false);
+
     }
 
     else if (points>=150)
     {
+        ui->chomperButton->setEnabled(true);
         ui->peaShooterButton->setEnabled(true);
         ui->sunFlowerButton->setEnabled(true);
         ui->cherryBombButton->setEnabled(true);
         ui->potatoeMineButton->setEnabled(true);
         ui->wallNutButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(false);
+        ui->snowPeaButton->setEnabled(false);
+
+
     }
 
     else if (points>=100)
@@ -496,6 +517,12 @@ void MainWindow::buttonsEnabled()
         ui->sunFlowerButton->setEnabled(true);
         ui->potatoeMineButton->setEnabled(true);
         ui->wallNutButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(false);
+        ui->snowPeaButton->setEnabled(false);
+        ui->chomperButton->setEnabled(false);
+        ui->cherryBombButton->setEnabled(false);
+
+
     }
 
     else if (points>=50)
@@ -503,10 +530,25 @@ void MainWindow::buttonsEnabled()
         ui->sunFlowerButton->setEnabled(true);
         ui->potatoeMineButton->setEnabled(true);
         ui->wallNutButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(false);
+        ui->snowPeaButton->setEnabled(false);
+        ui->chomperButton->setEnabled(false);
+        ui->cherryBombButton->setEnabled(false);
+        ui->peaShooterButton->setEnabled(false);
+
     }
     else if (points>=25)
     {
         ui->potatoeMineButton->setEnabled(true);
+        ui->repeaterButton->setEnabled(false);
+        ui->snowPeaButton->setEnabled(false);
+        ui->chomperButton->setEnabled(false);
+        ui->cherryBombButton->setEnabled(false);
+        ui->peaShooterButton->setEnabled(false);
+        ui->sunFlowerButton->setEnabled(false);
+        ui->wallNutButton->setEnabled(false);
+
+
     }
 
 
@@ -528,18 +570,22 @@ void MainWindow::buttonsDisabled()
 
 void MainWindow::on_peaShooterButton_clicked()
 {
-    buttonsEnabled();
-    ui->peaShooterButton->setDisabled(true);
+
+        //buttonsEnabled();
+        ui->peaShooterButton->setDisabled(true);
 
 
-    setPlant("Peashooter");
+        setPlant("Peashooter");
+
 }
 
 void MainWindow::on_sunFlowerButton_clicked()
 {
-    buttonsEnabled();
-    ui->sunFlowerButton->setDisabled(true);
-    setPlant("Sunflower");
+
+        //buttonsEnabled();
+        ui->sunFlowerButton->setDisabled(true);
+        setPlant("Sunflower");
+
 
 }
 
@@ -723,48 +769,51 @@ int MainWindow::random(double x1, double x2)
 
 void MainWindow::on_cherryBombButton_clicked()
 {
-    buttonsEnabled();
-    ui->cherryBombButton->setDisabled(true);
-    setPlant("CherryBomb");
+
+        //buttonsEnabled();
+        ui->cherryBombButton->setDisabled(true);
+        setPlant("CherryBomb");
+
 }
 
 void MainWindow::on_wallNutButton_clicked()
 {
-    buttonsEnabled();
+    //buttonsEnabled();
     ui->wallNutButton->setDisabled(true);
     setPlant("Wallnut");
 }
 
 void MainWindow::on_potatoeMineButton_clicked()
 {
-    buttonsEnabled();
+    //buttonsEnabled();
     ui->potatoeMineButton->setDisabled(true);
     setPlant("PotatoMine");
 }
 
 void MainWindow::on_snowPeaButton_clicked()
 {
-    buttonsEnabled();
+    //buttonsEnabled();
     ui->snowPeaButton->setDisabled(true);
     setPlant("SnowPea");
 }
 
 void MainWindow::on_chomperButton_clicked()
 {
-    buttonsEnabled();
+    //buttonsEnabled();
     ui->chomperButton->setDisabled(true);
     setPlant("Chomper");
 }
 
 void MainWindow::on_repeaterButton_clicked()
 {
-    buttonsEnabled();
+    //buttonsEnabled();
     ui->repeaterButton->setDisabled(true);
     setPlant("Repeater");
 }
 
 void MainWindow::collision()
 {
+    buttonsEnabled();
     int bull=bullets.size();
     for (int i=0; i<zombies.size(); i++)
     {
@@ -856,7 +905,7 @@ void MainWindow::collision()
                     zombies.erase(zombies.begin()+i);
                     delete z;
                     z=NULL;
-                    i--;
+                    break;
 
                 }
         }
@@ -892,6 +941,7 @@ void MainWindow::attack()
             {
                 if(zombies[i]->y()==plants[j]->y())
                 {
+
                     plants[j]->damageTaken(zombies[i]->getAttack());
                     if (plants[j]->getLife()<=0)
                     {
@@ -907,6 +957,63 @@ void MainWindow::attack()
             }
         }
     }
+    for (int j=0; j<plants.size(); j++)
+    {
+        for (int i=0; i<zombies.size(); i++)
+        {
+            if(zombies[i]->x()>=plants[j]->x()+90&&zombies[i]->x()<=plants[j]->x()+100)
+            {
+                if(zombies[i]->y()==plants[j]->y())
+                {
+                    if (plants[j]->getName()=="CherryBomb")
+                    {
+                        for (int k=0; k<zombies.size(); k++)
+                        {
+                            if (zombies[k]->x()<=110+plants[j]->x()&&zombies[k]->x()>=plants[j]->x()-110)
+                            {
+                                if (zombies[k]->y()<=100+plants[j]->y()&&zombies[k]->y()>=plants[j]->y()-100)
+                                {
+                                    z=zombies[k];
+                                    scene->removeItem(zombies[k]);
+                                    zombies.erase(zombies.begin()+k);
+                                    delete z;
+                                    z=NULL;
+                                    k--;
+                                }
+
+                            }
+                        }
+                        p=plants[j];
+                        scene->removeItem(plants[j]);
+                        plants.erase(plants.begin()+j);
+                        delete p;
+                        p=NULL;
+                        j--;
+                        break;
+                    }
+
+                    if (plants[j]->getName()=="PotatoMine")
+                    {
+                        z=zombies[i];
+                        scene->removeItem(zombies[i]);
+                        zombies.erase(zombies.begin()+i);
+                        delete z;
+                        z=NULL;
+                        i--;
+
+                        p=plants[j];
+                        scene->removeItem(plants[j]);
+                        plants.erase(plants.begin()+j);
+                        delete p;
+                        p=NULL;
+                        j--;
+                        break;
+                    }
+
+                }
+            }
+    }
+}
 }
 
 void MainWindow::levelLost()

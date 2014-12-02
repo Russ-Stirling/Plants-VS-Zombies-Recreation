@@ -23,8 +23,8 @@ zombie::zombie(QString filename)
         life=10;
         attack=1;
         rate=0.5;
-        setVelocity(0.75);
-        defaultVelocity=0.75;
+        setVelocity(1);
+        defaultVelocity=1;
 
     }
     else if (filename=="Zombie3")
@@ -32,8 +32,8 @@ zombie::zombie(QString filename)
         life=28;
         attack=1;
         rate=0.5;
-        setVelocity(1);
-        defaultVelocity=1;
+        setVelocity(0.25);
+        defaultVelocity=0.25;
 
 
     }
@@ -42,8 +42,8 @@ zombie::zombie(QString filename)
         life=65;
         attack=1;
         rate=0.5;
-        setVelocity(1);
-        defaultVelocity=1;
+        setVelocity(0.25);
+        defaultVelocity=0.25;
 
     }
     else if (filename=="Zombie5")
@@ -51,8 +51,8 @@ zombie::zombie(QString filename)
         life=16;
         attack=1;
         rate=0.5;
-        setVelocity(1);
-        defaultVelocity=1;
+        setVelocity(0.25);
+        defaultVelocity=0.25;
 
     }
 }

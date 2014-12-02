@@ -35,7 +35,6 @@ public:
     void readLevelCSV();
     void startLevel();
     QString getName(){return plantName;}
-    void buttonsEnabled();
     void buttonsDisabled();
     void setPlant(QString plant){plantName=plant;}
     void addPlant(int x, int y);
@@ -59,6 +58,9 @@ public slots:
     void attack();
 
     void plantsFire();
+
+    void buttonsEnabled();
+
 
 
 
@@ -91,10 +93,12 @@ private slots:
 
     void on_quitButton_clicked();
 
+    //void zombietimerstart();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower;
+    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower, *test, *zombieSpawn;
     QFile *save_file, *level_file;
     int level=0, timestamp=0, points=1500;
     QString currentUserName;
