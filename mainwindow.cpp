@@ -584,7 +584,9 @@ void MainWindow::on_peaShooterButton_clicked()
 void MainWindow::on_sunFlowerButton_clicked()
 {
 
-        //buttonsEnabled();
+        test1->stop();
+
+        buttonsEnabled();
         ui->sunFlowerButton->setDisabled(true);
         setPlant("Sunflower");
 
@@ -653,6 +655,7 @@ void MainWindow::addPlant(int x, int y)
     {
         if(!(y >= 100&&y<=300))
         {
+
             empty=false;
         }
     }
@@ -663,6 +666,7 @@ void MainWindow::addPlant(int x, int y)
     //qDebug()<<x;
     if (empty&&x>=100)
     {
+        test1->start();
         p=new plant;
         p->setData(plantName);
         p->setPixmap(test.scaled(100,100));
@@ -771,8 +775,9 @@ int MainWindow::random(double x1, double x2)
 
 void MainWindow::on_cherryBombButton_clicked()
 {
+    test1->stop();
 
-        //buttonsEnabled();
+        buttonsEnabled();
         ui->cherryBombButton->setDisabled(true);
         setPlant("CherryBomb");
 
@@ -780,35 +785,45 @@ void MainWindow::on_cherryBombButton_clicked()
 
 void MainWindow::on_wallNutButton_clicked()
 {
-    //buttonsEnabled();
+    test1->stop();
+
+    buttonsEnabled();
     ui->wallNutButton->setDisabled(true);
     setPlant("Wallnut");
 }
 
 void MainWindow::on_potatoeMineButton_clicked()
 {
-    //buttonsEnabled();
+    test1->stop();
+
+    buttonsEnabled();
     ui->potatoeMineButton->setDisabled(true);
     setPlant("PotatoMine");
 }
 
 void MainWindow::on_snowPeaButton_clicked()
 {
-    //buttonsEnabled();
+    test1->stop();
+
+    buttonsEnabled();
     ui->snowPeaButton->setDisabled(true);
     setPlant("SnowPea");
 }
 
 void MainWindow::on_chomperButton_clicked()
 {
-    //buttonsEnabled();
+    test1->stop();
+
+    buttonsEnabled();
     ui->chomperButton->setDisabled(true);
     setPlant("Chomper");
 }
 
 void MainWindow::on_repeaterButton_clicked()
 {
-    //buttonsEnabled();
+    test1->stop();
+
+    buttonsEnabled();
     ui->repeaterButton->setDisabled(true);
     setPlant("Repeater");
 }
