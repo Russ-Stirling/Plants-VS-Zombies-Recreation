@@ -1097,7 +1097,7 @@ void MainWindow::nextLevel()
             ui->nameComboBox->addItem(userName[i]+", "+userLevel[i]);
         }
 
-    if (levelSequence[level-1].isEmpty())
+    if (level>levelSequence.last().toInt())
     {
         level=0;
         QMessageBox msgBox;
