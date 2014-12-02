@@ -98,7 +98,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower, *test, *zombieSpawn;
+    QTimer *timer, *plantTimer, *sunTimer, *zombieTimer, *seeding, *attacking, *sunflower, *test1, *zombieSpawn;
     QFile *save_file, *level_file;
     int level=0, timestamp=0, points=1500;
     QString currentUserName;

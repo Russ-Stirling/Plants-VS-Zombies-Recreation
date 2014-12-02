@@ -189,6 +189,8 @@ void MainWindow::loadLevel()
 
     if (level==0)
     {
+        buttonsDisabled();
+
         ui->quitButton->setDisabled(true);
         ui->restartButton->setDisabled(true);
         ui->newButton->setEnabled(true);
@@ -323,9 +325,9 @@ void MainWindow::startLevel()
 
     timer->start(10);
 
-    test=new QTimer(this);
-    connect(test, SIGNAL(timeout()), this, SLOT(buttonsEnabled()));
-    test->start(10);
+    test1=new QTimer(this);
+    connect(test1, SIGNAL(timeout()), this, SLOT(buttonsEnabled()));
+    test1->start(10);
 
 
 
@@ -570,8 +572,8 @@ void MainWindow::buttonsDisabled()
 
 void MainWindow::on_peaShooterButton_clicked()
 {
-
-        //buttonsEnabled();
+        test1->stop();
+        buttonsEnabled();
         ui->peaShooterButton->setDisabled(true);
 
 
@@ -813,7 +815,6 @@ void MainWindow::on_repeaterButton_clicked()
 
 void MainWindow::collision()
 {
-    buttonsEnabled();
     for (int i=0; i<zombies.size(); i++)
     {
 
