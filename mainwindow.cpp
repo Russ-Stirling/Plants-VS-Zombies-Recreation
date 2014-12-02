@@ -323,7 +323,7 @@ void MainWindow::startLevel()
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(timer, SIGNAL(timeout()), this, SLOT(collision()));
 
-    timer->start(10);
+    timer->start(40);
 
     test1=new QTimer(this);
     connect(test1, SIGNAL(timeout()), this, SLOT(buttonsEnabled()));
@@ -880,7 +880,10 @@ void MainWindow::collision()
                 if(zombies[i]->y()==bullets[j]->y())
                 {
                     zombies[i]->damageTaken(bullets[j]->getDamage());
-
+                    if (bullets[j]->getSlow())
+                    {
+                        zombies[i]->setDefaultVelocity(zombies[i]->getDefaultVelocity()-1);
+                    }
                     b=bullets[j];
                     scene->removeItem(bullets[j]);
                     bullets.erase(bullets.begin()+j);

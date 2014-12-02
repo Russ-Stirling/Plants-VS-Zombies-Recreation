@@ -14,9 +14,11 @@ public:
     int getAttack(){return attack;}
     int getDefaultVelocity(){return defaultVelocity;}
     int getLife(){return life;}
+    void setDefaultVelocity(double v);
 private:
     QString name;
     double life, attack, rate, velocity, defaultVelocity;
+    bool slow=true;
 };
 
 #endif // ZOMBIE_H

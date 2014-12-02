@@ -10,7 +10,7 @@ private:
 public:
     lawnMower();
     void advance(int phase);
-    void setVelocity(){velocity=2;}
+    void setVelocity(){velocity=8;}
 };
 
 #endif // LAWNMOWER_H

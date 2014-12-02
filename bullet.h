@@ -15,7 +15,7 @@ public:
 private:
     int damage = 1;
     bool slow = false;
-    int velocity = 2;
+    int velocity = 8;
 };
 
 #endif // BULLET_H
