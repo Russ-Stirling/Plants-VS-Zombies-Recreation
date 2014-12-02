@@ -409,12 +409,15 @@ void MainWindow::on_newButton_clicked()
     {
     case QMessageBox::Ok:
     {
+        currentUserName = ui->nameLineEdit->text();
+        if(currentUserName.size()<=10)
+        {
         level=1;
         ui->levelLabel->setText(QString::number(level));
-        currentUserName = ui->nameLineEdit->text();
         readPlayerCSV();
         timestamp= QDateTime::currentDateTime().toTime_t();
         //qDebug() << userName;
+
         if (save_file->open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
         {
 
@@ -430,6 +433,11 @@ void MainWindow::on_newButton_clicked()
         }
         ui->nameComboBox->addItem(currentUserName+", "+QString::number(level));
         loadLevel();
+        break;
+        }
+        QMessageBox mssg;
+        mssg.setText("invalid user name");
+        mssg.exec();
         break;
     }
     case QMessageBox::Cancel:
