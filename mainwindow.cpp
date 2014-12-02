@@ -335,11 +335,40 @@ void MainWindow::startLevel()
 
     sunflower = new QTimer(this);
     connect(sunflower, SIGNAL(timeout()), this, SLOT(addSunFromSunflower()));
-    //sunflower->start(5000);
-    for (int i=0; i<levelRows.size(); i++)
+
+    if (levelRows[level-1]=="1")
     {
-        qDebug() << levelRows[i];
+        l=new lawnMower;
+        l->setPos(0,200);
+        lawnmowers.insert(lawnmowers.end(), l);
+        scene->addItem(l);
+        l=NULL;
     }
+    else if (levelRows[level-1]=="3")
+    {
+        for (int i=1; i<4; i++)
+        {
+            l=new lawnMower;
+            l->setPos(0,i*100);
+            lawnmowers.insert(lawnmowers.end(), l);
+            scene->addItem(l);
+            l=NULL;
+        }
+    }
+
+    else
+    {
+        for (int i=0; i<5; i++)
+        {
+            l=new lawnMower;
+            l->setPos(0,i*100);
+            lawnmowers.insert(lawnmowers.end(), l);
+            scene->addItem(l);
+            l=NULL;
+        }
+    }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -813,8 +842,43 @@ void MainWindow::collision()
 
             }
         }
+        for (int j=0; j<lawnmowers.size(); j++)
+        {
+
+
+            if (zombies[i]->x()>=lawnmowers[j]->x()+40&&zombies[i]->x()<=lawnmowers[j]->x()+70)
+            {
+                if(zombies[i]->y()==lawnmowers[j]->y())
+                {
+                    lawnmowers[j]->setVelocity();
+                    z=zombies[i];
+                    scene->removeItem(zombies[i]);
+                    zombies.erase(zombies.begin()+i);
+                    delete z;
+                    z=NULL;
+                    i--;
+
+                }
+        }
 
     }
+    }
+
+    for (int j=0; j<lawnmowers.size(); j++)
+        {
+            if (lawnmowers[j]->x()>=1000)
+            {
+                l=lawnmowers[j];
+
+                scene->removeItem(lawnmowers[j]);
+                lawnmowers.erase(lawnmowers.begin()+j);
+                delete l;
+                l=NULL;
+                j--;
+                break;
+            }
+        }
+
 
 }
 

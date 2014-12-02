@@ -5,8 +5,12 @@
 
 class lawnMower : public QGraphicsPixmapItem
 {
+private:
+    int velocity=0;
 public:
     lawnMower();
+    void advance(int phase);
+    void setVelocity(){velocity=2;}
 };
 
 #endif // LAWNMOWER_H

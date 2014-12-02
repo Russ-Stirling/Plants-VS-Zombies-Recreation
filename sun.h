@@ -13,7 +13,7 @@ public:
     void setStop(int s){stop=s;}
 
 private:
-    int points=50;
+    int points=25;
     int velocity=1;
     int life = 750;
     int stop = 400;
