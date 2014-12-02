@@ -390,6 +390,63 @@ void MainWindow::startLevel()
 MainWindow::~MainWindow()
 {
     delete ui;
+    if (timer!=NULL)
+    {
+        delete timer;
+    }
+    if (plantTimer!=NULL)
+    {
+        delete plantTimer;
+    }
+    if (test1!=NULL)
+    {
+        delete test1;
+    }
+    if (seeding!=NULL)
+    {
+        delete seeding;
+    }
+    if (attacking!=NULL)
+    {
+        delete attacking;
+    }
+    if (zombieTimer!=NULL)
+    {
+        delete zombieTimer;
+    }
+    if (sunTimer!=NULL)
+    {
+        delete sunTimer;
+    }
+    if (sunflower!=NULL)
+    {
+        delete sunflower;
+    }
+    delete scene;
+    userInfo.clear(); userTimestamp.clear(); userName.clear(); userLevel.clear();
+    levelSequence.clear(); levelRows.clear(); levelStart.clear(); levelInterval.clear(); levelDecrement.clear();
+    chosenLevelSequence.clear();
+    suns.clear(); lawnmowers.clear();zombies.clear(); bullets.clear(); plants.clear();
+    if (p!=NULL)
+        delete p;
+    if (z!=NULL)
+        delete z;
+    if (b!=NULL)
+        delete b;
+    if (s!=NULL)
+        delete s;
+    if (l!=NULL)
+        delete l;
+    if (plantPix!=NULL)
+        delete plantPix;
+    if (plantPixTest!=NULL)
+        delete plantPixTest;
+    if (save_file!=NULL)
+        delete save_file;
+    if (level_file!=NULL)
+        delete level_file;
+
+
 }
 
 void MainWindow::on_startButton_clicked()
@@ -1097,7 +1154,7 @@ void MainWindow::nextLevel()
             ui->nameComboBox->addItem(userName[i]+", "+userLevel[i]);
         }
 
-    if (level>levelSequence.last().toInt())
+    if (level>3)
     {
         level=0;
         QMessageBox msgBox;
