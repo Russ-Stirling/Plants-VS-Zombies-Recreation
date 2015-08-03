@@ -1041,11 +1041,37 @@ void MainWindow::attack()
     {
         for (int i=0; i<zombies.size(); i++)
         {
+            if (plants[j]->getName()=="CherryBomb")
+            {
+                for (int k=0; k<zombies.size(); k++)
+                {
+                    if (zombies[k]->x()<=110+plants[j]->x()&&zombies[k]->x()>=plants[j]->x()-110)
+                    {
+                        if (zombies[k]->y()<=100+plants[j]->y()&&zombies[k]->y()>=plants[j]->y()-100)
+                        {
+                            z=zombies[k];
+                            scene->removeItem(zombies[k]);
+                            zombies.erase(zombies.begin()+k);
+                            delete z;
+                            z=NULL;
+                            k--;
+                        }
+
+                    }
+                }
+                p=plants[j];
+                scene->removeItem(plants[j]);
+                plants.erase(plants.begin()+j);
+                delete p;
+                p=NULL;
+                j--;
+                break;
+            }
             if(zombies[i]->x()>=plants[j]->x()+90&&zombies[i]->x()<=plants[j]->x()+100)
             {
                 if(zombies[i]->y()==plants[j]->y())
                 {
-                    if (plants[j]->getName()=="CherryBomb")
+                    /* if (plants[j]->getName()=="CherryBomb")
                     {
                         for (int k=0; k<zombies.size(); k++)
                         {
@@ -1070,7 +1096,7 @@ void MainWindow::attack()
                         p=NULL;
                         j--;
                         break;
-                    }
+                    } */
 
                     if (plants[j]->getName()=="PotatoMine")
                     {
